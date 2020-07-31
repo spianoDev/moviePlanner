@@ -34,4 +34,9 @@ connection.connect(function(err) {
 
 //Routes below
 
+app.get('/', (req, res) => {
+    connection.query('SELECT * FROM movies', (err, data) => {
+        res.render('index', { movies: data })
+    })
+});
 app.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`));
