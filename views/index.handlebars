@@ -3,7 +3,7 @@
     <ul>
         {{#each movies}}
             <li>{{id}} - {{movie}}</li>
-<button>&times;</button>
+<button data-movieID="{{id}}">&times;</button>
         {{/each}}
     </ul>
 
@@ -13,17 +13,27 @@
     <h2>Update your Movie Options...</h2>
 </div>
 
+
 <script>
     $(document).ready(function () {
         const $newMovieInput = $('#new-movie-input');
         const $newMovieButton = $('new-movie-btn');
-
+        const $deleteButtons = $('.delete');
         $newMovieButton.on('click', () => {
             const newMovieText = $newMovieInput.val().trim();
             $.ajax('/api/movies', {
                 type: 'POST',
                 data: { newMovieText }
-            }).catch(err => console.log(err))
+            }).then(()=> Location.reload())
+                    .catch(err => console.log(err))
+        });
+        $deleteButtons.on('click', function() {
+            const id = $(this).data('movieID');
+            $.ajax(`/api/movies/${id}`, {
+                type: 'DELETE'
+            })
+                    .then(()=> Location.reload())
+                    .catch(err => console.log(err))
         })
     })
 </script>
