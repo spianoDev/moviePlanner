@@ -39,4 +39,13 @@ app.get('/', (req, res) => {
         res.render('index', { movies: data })
     })
 });
+
+app.post('/api/movies', (req, res) => {
+    const newMovieText = req.body.newMovieText;
+    console.log(req.body);
+    connection.query('INSERT INTO movies (movie) VALUES (?)', [newMovieText], (err, response)=> {
+        if(err) throw err;
+        res..status(200).send();
+    })
+});
 app.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`));
