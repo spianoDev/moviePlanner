@@ -35,26 +35,28 @@
             const newMovieText = $newMovieInput.val().trim();
             $.ajax('/api/movies', {
                 type: 'POST',
-                data: { newMovieText }
-            }).then(()=> Location.reload())
+                data: {newMovieText}
+            }).then(() => location.reload())
                     .catch(err => console.log(err))
         });
-        $deleteButtons.on('click', function() {
+        $deleteButtons.on('click', function () {
             const id = $(this).data('movieID');
             $.ajax(`/api/movies/${id}`, {
                 type: 'DELETE'
             })
-                    .then(()=> Location.reload())
+                    .then(() => location.reload())
                     .catch(err => console.log(err))
-        })
-    });
+        });
+
         $updateMovieButton.on('click', () => {
-        const updateMovieText = $updateMovieInput.val().trim();
-        $.ajax(`/api/movies/${id}`, {
-            type: 'PUT',
-            data: { updateMovieText }
-        })
-        .then(() => Location.reload())
-        .catch(err => console.log(err))
-    })
+            const updateMovieText = $updateMovieInput.val().trim();
+            const id = $select.val();
+            $.ajax(`/api/movies/${id}`, {
+                type: 'PUT',
+                data: {updateMovieText}
+            })
+                    .then(() => location.reload())
+                    .catch(err => console.log(err))
+        });
+    });
 </script>

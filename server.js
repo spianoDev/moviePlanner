@@ -52,9 +52,9 @@ app.post('/api/movies', (req, res) => {
 
 app.put(`/api/movies/:id`, (req, res) => {
     const id = req.params.id;
-    const updatedMovieText = req.body.updatedMovieText;
+    const updateMovieText = req.body.updateMovieText;
     connection.query('UPDATE movies SET movie = ? WHERE id = ?',
-        [updatedMovieText, id],
+        [updateMovieText, id],
         (err, result) => {
         if(err) throw err;
         res.status(200).send()
