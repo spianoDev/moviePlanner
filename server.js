@@ -43,9 +43,22 @@ app.get('/', (req, res) => {
 app.post('/api/movies', (req, res) => {
     const newMovieText = req.body.newMovieText;
     console.log(req.body);
-    connection.query('INSERT INTO movies (movie) VALUES (?)', [newMovieText], (err, response)=> {
+    connection.query('INSERT INTO movies (movie) VALUES (?)',
+        [newMovieText], (err, response)=> {
         if(err) throw err;
         res.status(200).send();
+    })
+});
+
+app.put(`/api/movies/:id`, (req, res) => {
+    const id = req.params.id;
+    const updatedMovieText = req.body.updatedMovieText;
+    connection.query('UPDATE movies SET movie = ? WHERE id = ?',
+        [updatedMovieText, id],
+        (err, result) => {
+        if(err) throw err;
+        res.status(200).send()
+
     })
 });
 

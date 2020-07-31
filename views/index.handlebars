@@ -9,16 +9,28 @@
 
     <h2> Add a Movie Here</h2>
     <label for="new-movie-input">movie</label><input id="new-movie-input" type="text"/>
-    <button id="new-movie-btn" type="submit">add movie </button>
+    <button id="new-movie-btn" >add movie </button>
     <h2>Update your Movie Options...</h2>
+    <label for="movie-selections">choose one</label><select id="movie-selections">
+    {{#each movies}}
+        <option value="{{id}}">{{movie}}</option>
+    {{/each}}
+    </select>
+    <label for="update-movie-input">movie</label><input id="update-movie-input" type="text"/>
+    <button id="update-movie-btn" >update movie </button>
 </div>
 
 
 <script>
     $(document).ready(function () {
         const $newMovieInput = $('#new-movie-input');
-        const $newMovieButton = $('new-movie-btn');
+        const $newMovieButton = $('#new-movie-btn');
         const $deleteButtons = $('.delete');
+        const $select = $('#movie-selections');
+        const $updateMovieInput = $('#update-movie-input');
+        const $updateMovieButton = $('#update-movie-btn');
+
+
         $newMovieButton.on('click', () => {
             const newMovieText = $newMovieInput.val().trim();
             $.ajax('/api/movies', {
@@ -35,5 +47,14 @@
                     .then(()=> Location.reload())
                     .catch(err => console.log(err))
         })
+    });
+        $updateMovieButton.on('click', () => {
+        const updateMovieText = $updateMovieInput.val().trim();
+        $.ajax(`/api/movies/${id}`, {
+            type: 'PUT',
+            data: { updateMovieText }
+        })
+        .then(() => Location.reload())
+        .catch(err => console.log(err))
     })
 </script>
